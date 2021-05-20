@@ -7,6 +7,8 @@
 #include <aws/s3/model/GetObjectRequest.h>
 #include <fstream>
 #include <awsdoc/s3/s3_examples.h>
+#include <sys/stat.h>
+#include <aws/s3/model/PutObjectRequest.h>
 
 /* ////////////////////////////////////////////////////////////////////////////
  * Purpose: Prints the beginning contents of a video file in a
