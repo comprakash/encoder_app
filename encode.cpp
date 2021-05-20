@@ -61,7 +61,7 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
         retrieved_file.getline(file_data, 254);
         std::cout << file_data << std::endl;
 
-        put_object_request.SetBody(get_object_request);
+        put_object_request.SetBody(retrieved_file);
 
         Aws::S3::Model::PutObjectOutcome outcome =
             s3_client.PutObject(put_object_request);
