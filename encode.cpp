@@ -59,20 +59,15 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
         retrieved_file.getline(file_data, 254);
         std::cout << file_data << std::endl;
 
-        std::shared_ptr<Aws::IOStream> input_data =
-            Aws::MakeShared<Aws::FStream>("SampleAllocationTag",
-                objectName.c_str(),
-                std::ios_base::in | std::ios_base::binary);
-
-        request.SetBody(input_data);
+        put_object_request.SetBody(get_object_request);
 
         Aws::S3::Model::PutObjectOutcome outcome =
-            s3_client.PutObject(request);
+            s3_client.PutObject(put_object_request);
 
         if (outcome.IsSuccess()) {
 
-            std::cout << "Added object '" << objectName << "' to bucket '"
-                << bucketName << "'.";
+            std::cout << "Added object '" << outputObjectKey << "' to bucket '"
+                << toBucket << "'.";
             return true;
         }
         else

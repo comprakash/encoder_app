@@ -33,6 +33,8 @@ namespace AwsDoc
             const Aws::String& objectKey, const Aws::String& region = "");
         AWSDOC_S3_API bool GetObject(const Aws::String& objectKey,
             const Aws::String& fromBucket, const Aws::String& region = "");
+        AWSDOC_S3_API bool EncodeObject(const Aws::String& inputObjectKey, const Aws::String& fromBucket,
+            const Aws::String& outputObjectKey, const Aws::String& toBucket, const Aws::String& region = "");
         AWSDOC_S3_API bool GetWebsiteConfig(const Aws::String& bucketName,
             const Aws::String& region = "");
         AWSDOC_S3_API bool ListBuckets();
