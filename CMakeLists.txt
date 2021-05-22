@@ -4,6 +4,23 @@
 # Set the minimum required version of CMake for this project.
 cmake_minimum_required(VERSION 3.8)
 
+if(WIN32)
+    set(AWSSDK_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\cmake\\AWSSDK")
+    set(aws-cpp-sdk-core_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\cmake\\aws-cpp-sdk-core")
+    set(aws-crt-cpp_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-crt-cpp\\cmake")
+    set(aws-c-http_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-http\\cmake")
+    set(aws-c-io_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-io\\cmake")
+    set(aws-c-common_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-common\\cmake")
+    set(aws-c-cal_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-cal\\cmake")
+    set(aws-c-compression_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-compression\\cmake")
+    set(aws-c-mqtt_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-mqtt\\cmake")
+    set(aws-c-auth_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-auth\\cmake")
+    set(aws-c-event-stream_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-event-stream\\cmake")
+    set(aws-c-s3_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-c-s3\\cmake")
+    set(aws-checksums_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\aws-checksums\\cmake")
+    set(aws-cpp-sdk-s3_DIR "C:\\Program Files (x86)\\aws-cpp-sdk-all\\lib\\cmake\\aws-cpp-sdk-s3")
+endif()
+
 # Set this project's name.
 project("encoding-app")
 
@@ -17,6 +34,7 @@ endif()
 
 # Find the AWS SDK for C++ package.
 find_package(AWSSDK REQUIRED COMPONENTS s3)
+set(SERVICE s3)
 
 # If the compiler is some version of Microsoft Visual C++, or another compiler simulating C++, 
 # and building as shared libraries, then dynamically link to those shared libraries.
