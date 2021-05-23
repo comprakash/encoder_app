@@ -53,20 +53,11 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
 
     if (get_object_outcome.IsSuccess())
     {
-        auto& retrieved_file = get_object_outcome.GetResultWithOwnership().
-            GetBody();
-
-        // Print a beginning portion of the video file.
-        /* std::cout << "Beginning of file contents:\n";
-        char file_data[255] = { 0 };
-        retrieved_file.getline(file_data, 254);
-        std::cout << file_data << std::endl;*/
+        auto& retrieved_file = get_object_outcome.GetResultWithOwnership().GetBody();
 
         std::shared_ptr<Aws::IOStream> input_data =
-            Aws::MakeShared<Aws::IOStream>("PutObjectInputStream",
-                retrieved_file.rdbuf());
+            Aws::MakeShared<Aws::IOStream>("PutObjectInputStream", retrieved_file.rdbuf());
 
-        // std::ios_base::in | std::ios_base::binary
         put_object_request.SetBody(input_data);
 
         Aws::S3::Model::PutObjectOutcome outcome =
@@ -96,17 +87,21 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
     }
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc != 6)
+    {
+        std::cout << " Usage: " << argv[0] << " Input_File_Key Input_Bucket_Name Output_File_Key Output_Bucket_Name AWS_Region" << std::endl;
+        return -1;
+    }
     Aws::SDKOptions options;
     Aws::InitAPI(options);
     {
-        const Aws::String input_object_name = "SampleVideo_1280x720_5mb.mp4";
-        // const Aws::String input_object_name = "README.md";
-        const Aws::String input_bucket_name = "test-encoding-app";
-        const Aws::String output_object_name = "SampleVideo_1280x720_5mb_encoded.mp4";
-        const Aws::String output_bucket_name = "test-encoding-app";
-        const Aws::String region = "ap-northeast-1";
+        const Aws::String input_object_name = argv[1];
+        const Aws::String input_bucket_name = argv[2];
+        const Aws::String output_object_name = argv[3];
+        const Aws::String output_bucket_name = argv[4];
+        const Aws::String region = argv[5];
 
         if (!AwsDoc::S3::EncodeObject(input_object_name, input_bucket_name, output_object_name, output_bucket_name, region))
         {
