@@ -42,6 +42,7 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
     Aws::S3::Model::GetObjectRequest get_object_request;
     get_object_request.SetBucket(fromBucket);
     get_object_request.SetKey(inputObjectKey);
+    
 
     Aws::S3::Model::PutObjectRequest put_object_request;
     put_object_request.SetBucket(toBucket);
@@ -56,12 +57,17 @@ bool AwsDoc::S3::EncodeObject(const Aws::String& inputObjectKey, const Aws::Stri
             GetBody();
 
         // Print a beginning portion of the video file.
-        std::cout << "Beginning of file contents:\n";
+        /* std::cout << "Beginning of file contents:\n";
         char file_data[255] = { 0 };
         retrieved_file.getline(file_data, 254);
-        std::cout << file_data << std::endl;
+        std::cout << file_data << std::endl;*/
 
-        put_object_request.SetBody(retrieved_file);
+        std::shared_ptr<Aws::IOStream> input_data =
+            Aws::MakeShared<Aws::IOStream>("PutObjectInputStream",
+                retrieved_file.rdbuf());
+
+        // std::ios_base::in | std::ios_base::binary
+        put_object_request.SetBody(input_data);
 
         Aws::S3::Model::PutObjectOutcome outcome =
             s3_client.PutObject(put_object_request);
@@ -96,6 +102,7 @@ int main()
     Aws::InitAPI(options);
     {
         const Aws::String input_object_name = "SampleVideo_1280x720_5mb.mp4";
+        // const Aws::String input_object_name = "README.md";
         const Aws::String input_bucket_name = "test-encoding-app";
         const Aws::String output_object_name = "SampleVideo_1280x720_5mb_encoded.mp4";
         const Aws::String output_bucket_name = "test-encoding-app";
