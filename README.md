@@ -22,4 +22,4 @@ App to encoder the video files in S3
 - cmake ..
 - make
 - ./run_encode  Input_File_Key Input_Bucket_Name Output_File_Key Output_Bucket_Name AWS_Region
-Ex: .\run_encode.exe SampleVideo_1280x720_5mb.mp4 test-encoding-app SampleVideo_1280x720_5mb_encoded.mp4 test-encoding-app ap-northeast-1
+- Example: .\run_encode.exe SampleVideo_1280x720_5mb.mp4 test-encoding-app SampleVideo_1280x720_5mb_encoded.mp4 test-encoding-app ap-northeast-1
